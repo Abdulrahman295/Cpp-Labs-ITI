@@ -31,19 +31,6 @@ void disableRawMode() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleMode(hOut, originalConsoleMode);
 }
-
-void initializeTerminal() {
-    setbuf(stdout, NULL);
-
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    if (hOut == INVALID_HANDLE_VALUE) return;
-
-    DWORD dwMode = 0;
-    if (!GetConsoleMode(hOut, &dwMode)) return;
-
-    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-    SetConsoleMode(hOut, dwMode);
-}
 #else
 #include <termios.h>
 #include <unistd.h>
@@ -76,22 +63,6 @@ void enableRawMode() {
 
 void disableRawMode() {
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &originalTerminalAttributes);
-}
-
-void initializeTerminal() {
-    setbuf(stdout, NULL);
-
-    struct termios currentTerminalAttributes;
-    tcgetattr(STDIN_FILENO, &currentTerminalAttributes);
-
-    if (isCanonicalModeEnabled(currentTerminalAttributes)) {
-        originalTerminalAttributes = currentTerminalAttributes;
-    }
-
-    currentTerminalAttributes.c_lflag &= ~(ICANON | ECHO);
-    currentTerminalAttributes.c_cc[VMIN] = 0;
-    currentTerminalAttributes.c_cc[VTIME] = 1;
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, &currentTerminalAttributes);
 }
 #endif
 

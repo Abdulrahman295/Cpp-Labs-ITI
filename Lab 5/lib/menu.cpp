@@ -1,9 +1,9 @@
 #include <cstdio>
 #include <string>
 #include "menu.h"
+#include "employee.h"
 #include "terminal.h"
 #include "key.h"
-#include "employee.h"
 
 enum MenuOption {
     OPTION_NEW,

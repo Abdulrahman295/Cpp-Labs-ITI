@@ -12,8 +12,6 @@ enum Color {
     DEFAULT = 9
 };
 
-void initializeTerminal();
-
 void enableRawMode();
 
 void disableRawMode();
