@@ -1,0 +1,46 @@
+# ===========================
+# CLion / IntelliJ IDE Files
+# ===========================
+# Ignore the entire .idea directory
+.idea/
+
+# CMake build directory
+cmake-build-*/
+
+# ===========================
+# Build & Compiled Files
+# ===========================
+# Standard CMake build folder
+build/
+
+# Binaries / Executables
+*.exe
+*.out
+*.app
+*.dll
+*.so
+*.dylib
+
+# Object files
+*.o
+*.obj
+
+# Libraries
+*.lib
+*.a
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Linux
+*~
+
+# ===========================
+# Visual Studio / VS Code 
+# ===========================
+.vscode/
+*.sln
+*.vcxproj
+*.vcxproj.user

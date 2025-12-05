@@ -3,30 +3,27 @@
 #include <string>
 
 static bool isValidAlphabeticString(const std::string& str) {
-    if (str.empty()) return false;
-
-    return std::all_of(str.begin(), str.end(), [](char c) {
-               return std::isalpha(c) || std::isspace(c);
-           });
+    for (char c : str) {
+        if (!std::isalpha(c) && !std::isspace(c)) {
+            return false;
+        }
+    }
+    return str.length() > 2;
 }
 
 std::string getValidAlphabeticString(const char* prompt) {
-    std::string input;
-    bool validString = false;
+    std::string input = "";
 
-    while (!validString) {
-        printf("%s", prompt);
-        bool successRead = std::getline(std::cin >> std::ws, input).good();
+    printf("%s", prompt);
+    bool successRead = std::getline(std::cin >> std::ws, input).good();
 
-        if (successRead && isValidAlphabeticString(input)) {
-            validString = true;
-        } else {
-            std::cin.clear();
-            printf("Invalid input. Use letters and spaces only.\n");
-        }
+    if (successRead && isValidAlphabeticString(input)) {
+        return input;
     }
 
-    return input;
+    std::cin.clear();
+    printf("Invalid input. Use letters and spaces only.\n");
+    return "";
 }
 
 
@@ -40,27 +37,24 @@ static bool isValidPositiveNumber(const std::string& str) {
     try {
         size_t pos;
         double value = std::stod(str, &pos);
-        return pos == str.length() && value >= 0;
+        return pos == str.length() && value > 0;
     } catch (...){
         return false;
     }
 }
 
+
 double getValidPositiveNumber(const char* prompt) {
-    std::string input;
-    bool validNumber = false;
+    std::string input = "";
 
-    while (!validNumber) {
-        printf("%s", prompt);
-        bool successRead = std::getline(std::cin >> std::ws, input).good();
+    printf("%s", prompt);
+    bool successRead = std::getline(std::cin >> std::ws, input).good();
 
-        if (successRead && isValidPositiveNumber(input)) {
-            validNumber = true;
-        } else {
-            std::cin.clear();
-            printf("Invalid input. Enter a positive number.\n");
-        }
+    if (successRead && isValidPositiveNumber(input)) {
+        return std::stod(input);
     }
 
-    return std::stod(input);
+    std::cin.clear();
+    printf("Invalid input. Enter a positive number.\n");
+    return 0;
 }

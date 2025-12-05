@@ -22,7 +22,21 @@ void createEmployee() {
 
     Employee newEmp;
     newEmp.name   = getValidAlphabeticString("Enter Name: ");
+    if (newEmp.name == "") {
+        printf("\nOperation cancelled due to invalid name.");
+        enableRawMode();
+        while (detectKey() != K_BACKSPACE) { /*Busy wait*/ }
+        return;
+    }
+
     newEmp.salary = getValidPositiveNumber("Enter Salary: ");
+    if (newEmp.salary <= 0) {
+        printf("\nOperation cancelled due to invalid salary.");
+        enableRawMode();
+        while (detectKey() != K_BACKSPACE) { /*Busy wait*/ }
+        return;
+    }
+
     EMPLOYEES.push_back(newEmp);
 
     printf("\nSuccess!");
